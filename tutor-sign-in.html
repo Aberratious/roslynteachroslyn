@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Become a Tutor</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="RoslynRTwoKidsTextured.png" type="image/png">
+</head>
+<body>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="275990393001-a1adf0c2p94judbdehtpr64o537hoa0g.apps.googleusercontent.com">
+
+  
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="container" onclick="toggleSidebar()">
+      <div class="bar01"></div>
+      <div class="bar02"></div>
+      <div class="bar03"></div>
+    </div>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="student-home.html">Available Tutors</a>
+    <a href="tutor-sign-in.html">Become a Tutor</a>
+  </div>
+
+  <!-- Header Bar-->
+  <div class="page-container" id="pageContainer">
+    <div class="header-bar">
+      <!-- Menu button -->
+      <div class="container1" onclick="toggleSidebar()">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
+      <a href="tutor-sign-in.html" class="nav-button left-button">Be a Tutor</a>
+
+      <img src="RTRLogoTextured.png" alt="Logo" class="logo-image">
+
+      <a href="student-home.html" class="nav-button right-button">Get a Tutor</a>
+    </div>
+  </div>
+
+  <div class="sign-in-stuff">
+    <div class="sign-in-box">
+      <p class="sign-in-text">Sign in with your <u>SCHOOL</u> email:</p>
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

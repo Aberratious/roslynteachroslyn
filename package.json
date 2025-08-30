@@ -1,0 +1,12 @@
+{
+  "name": "roslyn-teach-roslyn",
+  "version": "1.0.0",
+  "description": "Student tutoring platform for Roslyn",
+  "dependencies": {
+    "nodemailer": "^6.9.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "echo 'No build step required'"
+  }
+}

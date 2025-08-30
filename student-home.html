@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Roslyn Teach Roslyn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="RoslynRTwoKidsTextured.png" type="image/png">
+  <link rel="stylesheet" href="homes.css" />
+</head>
+<body>
+
+
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="container" onclick="toggleSidebar()">
+      <div class="bar01"></div>
+      <div class="bar02"></div>
+      <div class="bar03"></div>
+    </div>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="student-home.html">Available Tutors</a>
+    <a href="tutor-sign-in.html">Become a Tutor</a>
+  </div>
+
+  <!-- Header Bar-->
+  <div class="page-container" id="pageContainer">
+    <div class="header-bar">
+      <!-- Menu button -->
+      <div class="container1" onclick="toggleSidebar()">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
+      <a href="tutor-sign-in.html" class="nav-button left-button">Be a Tutor</a>
+
+      <img src="RTRLogoTextured.png" alt="Logo" class="logo-image">
+
+      <a href="student-home.html" class="nav-button right-button">Get a Tutor</a>
+    </div>
+  </div>
+
+  <!-- Tutor Profiles -->
+  <div id="tutorProfiles" class="tutor-profiles-container"></div>
+
+  <script>
+  // Example data; in a real app, fetch from your backend
+  const tutors = [
+    { id: 1, first: "Jack", last: "Yin", grade: "11th", email: "jyin27@roslynschools.org", subject: "Math, English, Science, Coding", pic: "idiotjackwithawaterbottle.jpg", bio: "Patient math and coding tutor. Loves basketball." },
+    { id: 2, first: "Brody", last: "Konigsberg", grade: "10th", email: "bkonigsberg28@roslynschools.org", subject: "Math, Science", pic: "handsomebrody.jpg", bio: "Brother of the famous Jake Konigsberg, who had the highest recorded GPA in Roslyn history." },
+    { id: 3, first: "Max(im)", last: "Li", grade: "11th", email: "mli27@roslynschools.org", subject: "Math, Science, History", pic: "auramax.png", bio: "History buff and science lover." },
+    { id: 4, first: "Lebron", last: "James", grade: "12th", email: "lebron@goat.com", subject: "Coding", pic: "auramax.png", bio: "Expert coder and basketball legend." }
+  ];
+
+  function renderTutors() {
+    const container = document.getElementById('tutorProfiles');
+    container.innerHTML = tutors.map(tutor => `
+      <div class="tutor-profile">
+        <p class="name">${tutor.first} ${tutor.last}</p>
+        <p class="subjects">Subjects: ${tutor.subject}</p>
+        <p class="grade">Grade: ${tutor.grade}</p>
+        <div class="tutor-profile-bottom">
+          <img src="${tutor.pic}" class="personal-pic">
+          <div class="right-bottom">
+            <div class="bio">${tutor.bio}</div>
+            <button class="schedule" onclick="scheduleTutor('${tutor.email}', '${tutor.first}')">Schedule</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function scheduleTutor(email, first) {
+    const tutor = tutors.find(t => t.email === email && t.first === first);
+    localStorage.setItem('selectedTutor', JSON.stringify(tutor));
+    window.location.href = 'student-short-form.html';
+  }
+
+  renderTutors();
+  </script>
+
+  <script src="script.js"></script>
+
+  <!--
+  <script>
+  requireLogin('student');
+  </script>
+  -->
+</body>
+</html>

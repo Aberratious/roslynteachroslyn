@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Roslyn Teach Roslyn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="RoslynRTwoKidsTextured.png" type="image/png">
+  <link rel="stylesheet" href="homes.css" />
+</head>
+<body>
+
+
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="container" onclick="toggleSidebar()">
+      <div class="bar01"></div>
+      <div class="bar02"></div>
+      <div class="bar03"></div>
+    </div>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="student-home.html">Available Tutors</a>
+    <a href="tutor-sign-in.html">Become a Tutor</a>
+  </div>
+
+  <!-- Header Bar-->
+  <div class="page-container" id="pageContainer">
+    <div class="header-bar">
+      <!-- Menu button -->
+      <div class="container1" onclick="toggleSidebar()">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
+      <a href="tutor-sign-in.html" class="nav-button left-button">Be a Tutor</a>
+
+      <img src="RTRLogoTextured.png" alt="Logo" class="logo-image">
+
+      <a href="student-home.html" class="nav-button right-button">Get a Tutor</a>
+    </div>
+  </div>
+
+  <div class="form-flex-row">
+  <div id="selectedTutorBox"></div>
+  <div class="short-form-container">
+    <form id="studentRequestForm" class="short-form">
+      <p id="short-form-title">Request a Session</p>
+      <label>
+        Student Name:
+        <input type="text" name="studentName" required>
+      </label>
+      <label>
+        Student grade:
+        <input type="number" name="grade" required>
+      </label>
+      <label>
+        Contact Info (Phone or Email, preferrably phone):
+        <input type="text" name="contact" required>
+      </label>
+      <label>
+        Subject(s) needed help with:
+        <input type="text" name="subjects" required>
+      </label>
+      <label>
+        Amount of Time (minutes):
+          <select name="time" id="time">
+          <option value="30">30 minutes</option>
+          <option value="45">45 minutes</option>
+          <option value="60" selected>60 minutes</option>
+          <option value="90">90 minutes</option>
+          <option value="120">120 minutes</option>
+        </select>      
+      </label>
+
+      <label>
+        Extra Notes for Tutor:
+        <textarea name="notes"></textarea>
+      </label>
+      <button type="submit" id="sendRequestButton">Send Request</button>
+    </form>
+  </div>
+</div>
+<script>
+  // Show selected tutor
+  const tutor = JSON.parse(localStorage.getItem('selectedTutor'));
+  if (tutor) {
+    document.getElementById('selectedTutorBox').innerHTML = `
+      <div class="tutor-profile">
+        <p class="name">${tutor.first} ${tutor.last}</p>
+        <p class="subjects">Subjects: ${tutor.subject}</p>
+        <p class="grade">Grade: ${tutor.grade}</p>
+        <div class="tutor-profile-bottom">
+          <img src="${tutor.pic}" class="personal-pic">
+          <div class="right-bottom">
+            <div class="bio">${tutor.bio}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  
+        
+
+  // Handle form submission
+  document.getElementById('studentRequestForm').onsubmit = async function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const data = {
+      tutorEmail: tutor.email,
+      tutorFirst: tutor.first,
+      tutorLast: tutor.last,
+      tutorGrade: tutor.grade,
+      studentName: formData.get('studentName'),
+      contact: formData.get('contact'),
+      grade: formData.get('grade'),
+      subjects: formData.get('subjects'),
+      time: formData.get('time'),
+      notes: formData.get('notes')
+    };
+    // Send to Netlify function
+    await fetch('/.netlify/functions/schedule', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    alert('Your request has been sent!');
+    this.reset();
+  };
+</script>
+<script src="script.js"></script>
+</body>
+</html>

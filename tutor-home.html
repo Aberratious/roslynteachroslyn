@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Roslyn Teach Roslyn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="RoslynRTwoKidsTextured.png" type="image/png">
+  <link rel="stylesheet" href="homes.css" />
+</head>
+<body>
+
+
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="container" onclick="toggleSidebar()">
+      <div class="bar01"></div>
+      <div class="bar02"></div>
+      <div class="bar03"></div>
+    </div>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="student-home.html">Available Tutors</a>
+    <a href="tutor-sign-in.html">Become a Tutor</a>
+  </div>
+
+  <!-- Header Bar-->
+  <div class="page-container" id="pageContainer">
+    <div class="header-bar">
+      <!-- Menu button -->
+      <div class="container1" onclick="toggleSidebar()">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
+      <a href="tutor-sign-in.html" class="nav-button left-button">Be a Tutor</a>
+
+      <img src="RTRLogoTextured.png" alt="Logo" class="logo-image">
+
+      <a href="student-home.html" class="nav-button right-button">Get a Tutor</a>
+    </div>
+  </div>
+
+  <!-- Example for tutor-home.html -->
+  <div id="requests"></div>
+  <script>
+  function loadRequests() {
+    fetch('http://localhost:5000/api/requests')
+      .then(res => res.json())
+      .then(requests => {
+        // Filter requests for this tutor (by email)
+        const user = JSON.parse(localStorage.getItem('user'));
+        const myRequests = requests.filter(r => r.tutorEmail === user.email);
+        document.getElementById('requests').innerHTML = myRequests.length
+          ? myRequests.map(r => `<div>Request from student: ${r.studentName}</div>`).join('')
+          : 'No requests yet.';
+      });
+  }
+  loadRequests();
+  </script>
+  
+  <script src="script.js"></script>
+  <!--
+  <script>
+  requireLogin('tutor');
+  </script>
+  -->
+</body>
+</html>
