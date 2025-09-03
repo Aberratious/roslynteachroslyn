@@ -119,12 +119,22 @@
       time: formData.get('time'),
       notes: formData.get('notes')
     };
-    // Send to Netlify function
-    await fetch('/.netlify/functions/schedule', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
+    // Send to Netlify Function
+    try {
+      const response = await fetch('/.netlify/functions/schedule', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to send request');
+      }
+    } catch (error) {
+      console.error('Error sending request:', error);
+      alert('Failed to send request. Please try again.');
+      return;
+    }
     alert('Your request has been sent!');
     this.reset();
   };
